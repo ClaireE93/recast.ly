@@ -1,12 +1,17 @@
 var Search = (props) => {
-  let handleKeyPress = (event) => {
+  let handleChanges = (event) => {
     if (props.onKeyUp) {
-      props.onKeyUp(document.getElementById('search-text').value, event);
+      props.onKeyUp(event.target.value);
+    }
+  };
+  let handleEnterHit = (event) => {
+    if (props.onKeyUp && event.keyCode === 13) {
+      props.onKeyUp(event.target.value);
     }
   };
   return (
     <div className="search-bar form-inline">
-      <input className="form-control" id="search-text" type="text" onKeyUp={(event) => handleKeyPress(event)}/>
+      <input className="form-control" id="search-text" type="text" onChange={(event) => handleChanges(event)} onKeyUp={(event) => handleEnterHit(event)}/>
       <button className="btn hidden-sm-down" onClick={() => props.onClick(document.getElementById('search-text').value)}>
         <span className="glyphicon glyphicon-search"></span>
       </button>

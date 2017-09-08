@@ -26,7 +26,7 @@ class App extends React.Component {
     this.fetchVideos();
   }
 
-  handleKeyPress(text, event) {
+  handleKeyPress(text) {
     this.setState({ searchText: text });
     _.throttle(() => this.fetchVideos(), 500)();
   }
@@ -47,7 +47,7 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <Search onClick={(e) => this.handleSearchClick(e)} onKeyUp={(text, event) => this.handleKeyPress(text, event)}/>
+            <Search onClick={(e) => this.handleSearchClick(e)} onKeyUp={(text) => this.handleKeyPress(text)}/>
           </div>
         </nav>
         <div className="row">
