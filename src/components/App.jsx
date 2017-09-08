@@ -3,13 +3,48 @@ class App extends React.Component {
     super();
     this.state = {
       currentVideo: window.exampleVideoData[0],
+      videoCollection: window.exampleVideoData,
     };
+
+    this.fetchVideos();
   }
 
   handleClick(e) {
-    console.log('clicked on', e);
     this.setState({
       currentVideo: e,
+    });
+  }
+
+  fetchVideos(options={}) {
+    // const cb = (array) => {
+    //   return array;
+    // };
+    // searchYouTube({query: 'puppies', key: window.YOUTUBE_API_KEY}, cb);
+
+    //FIXME: This works here, but needs to be in helper function. Trouble
+    // with binding 'this' to setState.
+    const obj = {};
+    obj.q = options.query || 'puppies';
+    obj.key = options.key || window.YOUTUBE_API_KEY;
+    obj.maxResults = options.max || '5';
+    obj.videoEmbeddable = true;
+    obj.part = 'snippet';
+    obj.type = 'video';
+    console.log('this is', this);
+    $.ajax({
+      url: 'https://www.googleapis.com/youtube/v3/search',
+      type: 'GET',
+      data: obj,
+      success: (data) => {
+        const results = (data.items);
+        this.setState({
+          currentVideo: results[0],
+          videoCollection: results,
+        });
+      },
+      error: function(data) {
+        console.log('error:', data);
+      }
     });
   }
 
@@ -26,7 +61,7 @@ class App extends React.Component {
             <VideoPlayer video={this.state.currentVideo}/>
           </div>
           <div className="col-md-5">
-            <VideoList videos={window.exampleVideoData}
+            <VideoList videos={this.state.videoCollection}
             onClick={(el) => this.handleClick(el)}/>
           </div>
         </div>
