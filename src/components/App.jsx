@@ -1,7 +1,16 @@
 class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      currentVideo: window.exampleVideoData[0],
+    };
+  }
 
-  handleVideoClick(e) {
-    
+  handleClick(e) {
+    console.log('clicked on', e);
+    this.setState({
+      currentVideo: e,
+    });
   }
 
   render() {
@@ -14,10 +23,11 @@ class App extends React.Component {
         </nav>
         <div className="row">
           <div className="col-md-7">
-            <VideoPlayer video={window.exampleVideoData[0]}/>
+            <VideoPlayer video={this.state.currentVideo}/>
           </div>
           <div className="col-md-5">
-            <VideoList videos={window.exampleVideoData}/>
+            <VideoList videos={window.exampleVideoData}
+            onClick={(el) => this.handleClick(el)}/>
           </div>
         </div>
       </div>
