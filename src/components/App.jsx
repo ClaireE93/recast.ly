@@ -15,37 +15,15 @@ class App extends React.Component {
     });
   }
 
-  fetchVideos(options={}) {
+  fetchVideos() {
     const cb = (array) => {
-      return array;
+      this.setState({
+        currentVideo: array[0],
+        videoCollection: array,
+      });
     };
 
-    //FIXME: This works here, but needs to be in helper function. Trouble
-    // with binding 'this' to setState.
-    // See "hipsterJesus" function
-    // https://davidwalsh.name/write-javascript-promises
-    const obj = {};
-    obj.q = options.query || 'puppies';
-    obj.key = options.key || window.YOUTUBE_API_KEY;
-    obj.maxResults = options.max || '5';
-    obj.videoEmbeddable = true;
-    obj.part = 'snippet';
-    obj.type = 'video';
-    $.ajax({
-      url: 'https://www.googleapis.com/youtube/v3/search',
-      type: 'GET',
-      data: obj,
-      success: (data) => {
-        const results = (data.items);
-        this.setState({
-          currentVideo: results[0],
-          videoCollection: results,
-        });
-      },
-      error: function(data) {
-        console.log('error:', data);
-      }
-    });
+    searchYouTube({query: 'puppies'}, cb.bind(this));
   }
 
   render() {

@@ -6,18 +6,12 @@ var searchYouTube = (options={}, callback=(e) => e) => {
   obj.videoEmbeddable = true;
   obj.part = 'snippet';
   obj.type = 'video';
-  console.log('this is', this);
   $.ajax({
     url: 'https://www.googleapis.com/youtube/v3/search',
     type: 'GET',
     data: obj,
     success: (data) => {
       const results = callback(data.items);
-      return results;
-      // this.setState({
-      //   currentVideo: results[0],
-      //   videoCollection: results,
-      // });
     },
     error: function(data) {
       console.log('error:', data);
