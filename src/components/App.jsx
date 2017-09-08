@@ -1,12 +1,16 @@
 class App extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.state = {
-      currentVideo: window.exampleVideoData[0],
-      videoCollection: window.exampleVideoData,
+      currentVideo: null,
+      videoCollection: null,
       searchText: 'puppies',
     };
 
+  }
+
+  componentDidMount() {
     this.fetchVideos();
   }
 
@@ -17,7 +21,14 @@ class App extends React.Component {
   }
 
   handleSearchClick(text) {
-    console.log('search clicked');
+    console.log('search clicked', text);
+    this.setState({ searchText: text });
+    this.fetchVideos();
+  }
+
+  handleKeyPress(text, event) {
+    this.setState({ searchText: text });
+    _.throttle(() => this.fetchVideos(), 500)();
   }
 
   fetchVideos() {
@@ -28,8 +39,7 @@ class App extends React.Component {
       });
     };
 
-
-    searchYouTube({query: this.state.searchText}, cb.bind(this));
+    this.props.searchYouTube({query: this.state.searchText}, cb.bind(this));
   }
 
   render() {
@@ -37,7 +47,7 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <Search onClick={(e) => this.handleSearchClick(e)}/>
+            <Search onClick={(e) => this.handleSearchClick(e)} onKeyUp={(text, event) => this.handleKeyPress(text, event)}/>
           </div>
         </nav>
         <div className="row">

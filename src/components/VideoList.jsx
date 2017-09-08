@@ -1,10 +1,14 @@
-var VideoList = (props) => (
-  <div className="video-list">
-    {props.videos.map((video) => (
-      <VideoListEntry key={video.id.videoId} onClick={props.onClick} video={video}/>
-    ))}
-  </div>
-);
+var VideoList = (props) => {
+  let listItems = props.videos ? props.videos.map((video) => (
+    <VideoListEntry key={video.id.videoId} onClick={props.onClick} video={video}/>
+  )) : <p>nothing here</p>;
+
+  return (
+    <div className="video-list">
+      {listItems}
+    </div>
+  );
+};
 
 // PropTypes tell other developers what `props` a component expects
 // Warnings will be shown in the console when the defined rules are violated
