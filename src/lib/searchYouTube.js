@@ -13,10 +13,11 @@ var searchYouTube = (options={}, callback=(e) => e) => {
     data: obj,
     success: (data) => {
       const results = callback(data.items);
-      this.setState({
-        currentVideo: results[0],
-        videoCollection: results,
-      });
+      return results;
+      // this.setState({
+      //   currentVideo: results[0],
+      //   videoCollection: results,
+      // });
     },
     error: function(data) {
       console.log('error:', data);

@@ -16,13 +16,14 @@ class App extends React.Component {
   }
 
   fetchVideos(options={}) {
-    // const cb = (array) => {
-    //   return array;
-    // };
-    // searchYouTube({query: 'puppies', key: window.YOUTUBE_API_KEY}, cb);
+    const cb = (array) => {
+      return array;
+    };
 
     //FIXME: This works here, but needs to be in helper function. Trouble
     // with binding 'this' to setState.
+    // See "hipsterJesus" function
+    // https://davidwalsh.name/write-javascript-promises
     const obj = {};
     obj.q = options.query || 'puppies';
     obj.key = options.key || window.YOUTUBE_API_KEY;
@@ -30,7 +31,6 @@ class App extends React.Component {
     obj.videoEmbeddable = true;
     obj.part = 'snippet';
     obj.type = 'video';
-    console.log('this is', this);
     $.ajax({
       url: 'https://www.googleapis.com/youtube/v3/search',
       type: 'GET',
