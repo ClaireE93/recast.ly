@@ -4,6 +4,7 @@ class App extends React.Component {
     this.state = {
       currentVideo: window.exampleVideoData[0],
       videoCollection: window.exampleVideoData,
+      searchText: 'puppies',
     };
 
     this.fetchVideos();
@@ -15,6 +16,10 @@ class App extends React.Component {
     });
   }
 
+  handleSearchClick(text) {
+    console.log('search clicked');
+  }
+
   fetchVideos() {
     const cb = (array) => {
       this.setState({
@@ -23,7 +28,8 @@ class App extends React.Component {
       });
     };
 
-    searchYouTube({query: 'puppies'}, cb.bind(this));
+
+    searchYouTube({query: this.state.searchText}, cb.bind(this));
   }
 
   render() {
@@ -31,7 +37,7 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <Search />
+            <Search onClick={(e) => this.handleSearchClick(e)}/>
           </div>
         </nav>
         <div className="row">
