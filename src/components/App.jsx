@@ -8,6 +8,7 @@ class App extends React.Component {
       searchText: 'puppies',
     };
 
+    this.throttledFetch = _.throttle(() => this.fetchVideos(), 500);
   }
 
   componentDidMount() {
@@ -22,12 +23,12 @@ class App extends React.Component {
 
   handleSearchClick(text) {
     this.setState({ searchText: text });
-    this.fetchVideos();
+    this.throttledFetch();
   }
 
   handleKeyPress(text) {
     this.setState({ searchText: text });
-    _.throttle(() => this.fetchVideos(), 500)();
+    this.throttledFetch();
   }
 
   fetchVideos() {
