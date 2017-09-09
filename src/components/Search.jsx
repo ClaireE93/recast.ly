@@ -1,10 +1,10 @@
 var Search = (props) => {
-  let handleChanges = (event) => {
+  const handleChanges = (event) => {
     if (props.onKeyUp) {
       props.onKeyUp(event.target.value);
     }
   };
-  let handleEnterHit = (event) => {
+  const handleEnterHit = (event) => {
     if (props.onKeyUp && event.keyCode === 13) {
       props.onKeyUp(event.target.value);
     }

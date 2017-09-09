@@ -21,7 +21,6 @@ class App extends React.Component {
   }
 
   handleSearchClick(text) {
-    console.log('search clicked', text);
     this.setState({ searchText: text });
     this.fetchVideos();
   }
